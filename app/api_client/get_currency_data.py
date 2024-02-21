@@ -5,13 +5,11 @@ from app.exceptions.errors import BaseError
 
 
 class CurrencyExchangeratesAPIClient:
-    UPDATE_RATES_URL = (
-        f"http://api.exchangeratesapi.io/v1/latest?access_key={API_CLIENT_KEY}"
+    UPDATE_RATES_URL = f"http://api.exchangeratesapi.io/v1/latest?access_key={API_CLIENT_KEY}"
+    UPDATE_CURRENCIES_URL = (
+        f"http://api.exchangeratesapi.io/v1/symbols?access_key={API_CLIENT_KEY}"
     )
-    UPDATE_CURRENCIES_URL = f"http://api.exchangeratesapi.io/v1/symbols?access_key={API_CLIENT_KEY}"  # noqa E501
-    ERRORS = {
-        "missing_access_key": "No API Key was specified or an invalid API Key was specified"
-    }
+    ERRORS = {"missing_access_key": "No API Key was specified or an invalid API Key was specified"}
 
     async def fetch(self, session, url):
         async with session.get(url) as response:

@@ -44,9 +44,7 @@ class Database:
         try:
             yield session
         except IntegrityError as exception:
-            logger.error(
-                "Session rollback because of exception: %s", exception
-            )  # noqa E501
+            logger.error("Session rollback because of exception: %s", exception)
             await session.rollback()
         finally:
             await session.close()

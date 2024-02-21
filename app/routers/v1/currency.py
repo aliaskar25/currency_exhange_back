@@ -31,9 +31,7 @@ async def get_currencies_list(
     currency_service: CurrencyService = Depends(Provide[Container.currency_service]),
 ) -> CurrenciesListResponse:
     return CurrenciesListResponse(
-        currencies=[
-            currency async for currency in await currency_service.get_all_currencies()
-        ]
+        currencies=[currency async for currency in await currency_service.get_all_currencies()]
     )
 
 
@@ -45,8 +43,6 @@ async def get_last_currency_update(
     try:
         return await currency_service.get_last_currency_update()
     except Exception as error:
-        print(dir(error))
-        print("-" * 80)
         raise HTTPException(status_code=400, detail=error.message)
 
 

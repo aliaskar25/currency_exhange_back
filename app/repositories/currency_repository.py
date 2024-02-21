@@ -62,13 +62,9 @@ class CurrencyRepository:
             _exists = result.scalar()
             return bool(_exists)
 
-    async def get_currency_by_code_and_update_rate(
-        self, code: str, rate: float
-    ) -> None:
+    async def get_currency_by_code_and_update_rate(self, code: str, rate: float) -> None:
         async with self.session_factory() as session, session.begin():
-            currency = await session.scalar(
-                select(self._model).where(self._model.code == code)
-            )
+            currency = await session.scalar(select(self._model).where(self._model.code == code))
             currency.rate = rate
             session.add(currency)
             await session.commit()
@@ -76,9 +72,7 @@ class CurrencyRepository:
 
     async def get_all_currencies(self) -> AsyncGenerator[CurrenciesList, Any]:
         async with self.session_factory() as session:
-            stream = await session.stream_scalars(
-                select(self._model).order_by(self._model.id)
-            )
+            stream = await session.stream_scalars(select(self._model).order_by(self._model.id))
             async for row in stream:
                 yield CurrenciesList(
                     title=row.title,
@@ -88,9 +82,7 @@ class CurrencyRepository:
 
     async def get_currency_rate(self, code) -> float:
         async with self.session_factory() as session:
-            currency = await session.scalar(
-                select(self._model).where(self._model.code == code)
-            )
+            currency = await session.scalar(select(self._model).where(self._model.code == code))
 
             if not currency:
                 raise DoesNotExistsError
