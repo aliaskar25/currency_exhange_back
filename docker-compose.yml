@@ -1,0 +1,48 @@
+version: "3.9"
+
+
+services:
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    volumes:
+        - postgres_data:/var/lib/postgresql/data/
+
+  app: &app
+    build:
+      context: .
+      target: app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/src/app
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+    entrypoint: ['docker/start.sh']
+    depends_on:
+      - db
+
+  migrations:
+    build:
+      context: .
+      target: migrations
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - ./app:/src/app
+      - ./migrations:/src/migrations
+
+
+volumes:
+  postgres_data: 
