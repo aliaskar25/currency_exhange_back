@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=40.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    .git
+  | pycache
+  | venv
+  | .venv
+  | env
+  | build
+)/
+'''
+
+[tool.isort]
+profile = "black"
+src_paths = ["app", ]
+skip_gitignore = true
+
+[tool.flake8]
+max-line-length = 88
+exclude = [
+    ".git",
+    "__pycache__",
+    "venv",
+    ".venv",
+    "env",
+    "build",
+]
+ignore = ["E203", "W503"]
+
+[tool.mypy]
+python_version = 3.10
+disallow_untyped_defs = true
+ignore_missing_imports = true

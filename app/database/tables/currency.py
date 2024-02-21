@@ -1,13 +1,11 @@
-from datetime import datetime
-
-from sqlalchemy import String, Numeric, DateTime
+from sqlalchemy import DateTime, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database.tables.base import Base
 
 
 class Currency(Base):
-    __tablename__ = 'currency'
+    __tablename__ = "currency"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str | None] = mapped_column(String(255))
@@ -16,7 +14,7 @@ class Currency(Base):
 
 
 class CurrencyLastUpdate(Base):
-    __tablename__ = 'last_currency_update'
+    __tablename__ = "last_currency_update"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     last_update: Mapped[DateTime] = mapped_column(DateTime())

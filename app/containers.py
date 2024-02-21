@@ -1,13 +1,13 @@
 from dependency_injector import containers, providers
 
+from app.api_client.get_currency_data import CurrencyExchangeratesAPIClient
 from app.config import settings
 from app.database.database import Database
-
 from app.repositories.currency_repository import (
-    CurrencyRepository, CurrencyLastUpdateRepository
+    CurrencyLastUpdateRepository,
+    CurrencyRepository,
 )
 from app.services.currency_service import CurrencyService
-from app.api_client.get_currency_data import CurrencyExchangeratesAPIClient
 
 
 class Container(containers.DeclarativeContainer):
@@ -29,9 +29,9 @@ class Container(containers.DeclarativeContainer):
 
     currency_service = providers.Factory(
         CurrencyService,
-        currency_repository=currency_repository, 
+        currency_repository=currency_repository,
         currency_last_update_repository=currency_last_update_repository,
-        currency_exchangerates_api_client=currency_exchangerates_api_client, 
+        currency_exchangerates_api_client=currency_exchangerates_api_client,
     )
 
 

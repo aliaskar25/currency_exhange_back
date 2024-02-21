@@ -1,11 +1,10 @@
 from typing import Any
 
-
 StrDict = dict[str, Any]
 
 
 class BaseError(Exception):
-    MESSAGE: str = 'Base error'
+    MESSAGE: str = "Base error"
     HTTP_STATUS: int = 400
 
     def __init__(
@@ -21,10 +20,10 @@ class BaseError(Exception):
 
 
 class DoesNotExistsError(BaseError):
-    MESSAGE = 'Object does not exist'
+    MESSAGE = "Object does not exist"
     HTTP_STATUS = 404
 
 
 class LastCurrenciesUpdateError(BaseError):
-    MESSAGE = 'There are no updates of currencies'
+    MESSAGE = "There are no updates of currencies"
     HTTP_STATUS = 400

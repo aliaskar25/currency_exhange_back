@@ -1,12 +1,14 @@
 import aiohttp
 
-from app.exceptions.errors import BaseError
 from app.config import API_CLIENT_KEY
+from app.exceptions.errors import BaseError
 
 
 class CurrencyExchangeratesAPIClient:
-    UPDATE_RATES_URL = f'http://api.exchangeratesapi.io/v1/latest?access_key={API_CLIENT_KEY}'
-    UPDATE_CURRENCIES_URL = f'http://api.exchangeratesapi.io/v1/symbols?access_key={API_CLIENT_KEY}'
+    UPDATE_RATES_URL = (
+        f"http://api.exchangeratesapi.io/v1/latest?access_key={API_CLIENT_KEY}"
+    )
+    UPDATE_CURRENCIES_URL = f"http://api.exchangeratesapi.io/v1/symbols?access_key={API_CLIENT_KEY}"  # noqa E501
     ERRORS = {
         "missing_access_key": "No API Key was specified or an invalid API Key was specified"
     }
@@ -20,8 +22,8 @@ class CurrencyExchangeratesAPIClient:
             res = await self.fetch(session, self.UPDATE_RATES_URL)
 
             try:
-                rates = res['rates']
-            except Exception as error:
+                rates = res["rates"]
+            except Exception:
                 error_code = res["error"]["code"]
                 error_message = self.ERRORS[error_code]
                 raise BaseError(message=error_message, status_code=400)
@@ -31,8 +33,8 @@ class CurrencyExchangeratesAPIClient:
         async with aiohttp.ClientSession() as session:
             res = await self.fetch(session, self.UPDATE_CURRENCIES_URL)
             try:
-                symbols = res['symbols']
-            except Exception as error:
+                symbols = res["symbols"]
+            except Exception:
                 error_code = res["error"]["code"]
                 error_message = self.ERRORS[error_code]
                 raise BaseError(message=error_message, status_code=400)

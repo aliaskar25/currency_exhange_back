@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
 
 
 class CurrencyWithoutRate(BaseModel):
@@ -8,7 +9,7 @@ class CurrencyWithoutRate(BaseModel):
 
 
 class CustomResp(BaseModel):
-    message: str 
+    message: str
 
 
 class CurrenciesList(BaseModel):
@@ -39,7 +40,7 @@ class LastCurrenctUpdate(BaseModel):
 class ConvertCurrencies(BaseModel):
     amount: float
     source_currency_code: str
-    target_currency_code: str    
+    target_currency_code: str
 
 
 class ConvertedCurrencyAmount(BaseModel):
